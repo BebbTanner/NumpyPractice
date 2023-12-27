@@ -1,21 +1,18 @@
 import yfinance as yf
 import pprint
 
+def getClosing(ticker):
+    stock = yf.Ticker(ticker)
+    hist = stock.history(period = "10d")
+    closingList = []
+    for price in hist['Close']:
+        closingList.append(price)
 
-'''
-Created a variable called msft. This is going to go out to 
-yahoo finance and grab the ticker information for microsoft.
-'''
-msft = yf.Ticker("MSFT")
+    return closingList
 
-# get historical market data
-hist = msft.history(period="10d")
 
-'''
-For loop that is going through all of the information in
-the hist variable and finding the values labeled close.
-It is then printing out those values.
-'''
-for price in hist['Close']:
-    pprint.pprint(price)
+
+msft = getClosing('MSFT')
+
+pprint.pprint(msft)
 
