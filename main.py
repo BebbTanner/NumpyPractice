@@ -3,6 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pprint
 
+'''
+Function that is setup to grab stock information for 
+whatever stock is kicked into it. For now the stocks 
+selected are hard coded in, but I would like to add a
+feature where the user selects those 5 stocks.
+'''
 def getClosing(ticker):
     stock = yf.Ticker(ticker)
     hist = stock.history(period="10d")
