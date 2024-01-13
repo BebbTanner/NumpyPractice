@@ -1,3 +1,12 @@
+'''
+Closing stock price program
+
+This program will ask the user to enter 5 stock tickers. It will then
+get the closing price of those stocks for the last 10 days and save them as arrays.
+It will then convert that into a line graph and save them as PNG's in the Charts folder.
+'''
+
+
 import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,46 +21,37 @@ feature where the user selects those 5 stocks.
 '''
 def getClosing(ticker):
     stock = yf.Ticker(ticker)
-    '''
-    Line 17 is declaring a varaible called hist. This is going to grab 
-    the historical market data over the last 10 days.
-    '''
     hist = stock.history(period="10d")
 
-    '''
-    Empty list that will be used later in the program.
-    '''
     closingList = []
 
-
-    '''
-    This for loop is going to go through the history of the selected stocks
-    and find the closing price for each of them. Then it will add those prices 
-    to the closinglist and round the price by 2 decimals.
-    '''
     for price in hist['Close']:
         closingList.append(round(price, 2))
 
     return closingList
 
 
-
 stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
 
-msftClosing = np.array(getClosing("MSFT"))
-days = list(range(1, len(msftClosing) + 1))
+for stock in stocks:
+    stockClosing = np.array(getClosing(stock))
+    days = list(range(1, len(stockClosing) + 1))
 
-plt.plot(days, msftClosing)
+    plt.plot(days, stockClosing)
 
-prices = getClosing("MSFT")
-prices.sort()
-low_price = prices[0]
-high_price = prices[-1]
+    prices = getClosing(stock)
+    prices.sort()
+    low_price = prices[0]
+    high_price = prices[-1]
 
-plt.axis([1,10,low_price,high_price])
+    plt.axis([1,10,low_price - 5,high_price + 5])
 
+    plt.ylabel("Closing Price")
+    plt.xlabel("Days")
+    plt.title("Closing price for " + stock)
 
-plt.ylabel("Closing Price")
-plt.xlabel("Days")
-plt.title("Closing price for " + "MSFT")
-plt.show()
+    saveFile = "Charts/" + stock + ".png"
+    plt.savefig(saveFile)
+
+    plt.show()
+
