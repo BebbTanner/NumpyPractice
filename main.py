@@ -2,6 +2,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 import pprint
+import copy
 
 '''
 Function that is setup to grab stock information for 
@@ -34,21 +35,23 @@ def getClosing(ticker):
     return closingList
 
 
-'''
-Stocks list that has the 5 stocks selected
-'''
+
 stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
 
 msftClosing = np.array(getClosing("MSFT"))
+days = list(range(1, len(msftClosing) + 1))
 
-'''
-This should graph the closing prices of the 5 selected stocks.
-'''
-plt.plot(msftClosing)
+plt.plot(days, msftClosing)
+
+prices = getClosing("MSFT")
+prices.sort()
+low_price = prices[0]
+high_price = prices[-1]
+
+plt.axis([1,10,low_price,high_price])
+
+
 plt.ylabel("Closing Price")
 plt.xlabel("Days")
-'''
-This is going to print out the stocks that were just plotted above.
-'''
+plt.title("Closing price for " + "MSFT")
 plt.show()
-
