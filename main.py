@@ -39,12 +39,14 @@ Stocks list that has the 5 stocks selected
 '''
 stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
 
-stockArray = np.array(stocks)
+msftClosing = np.array(getClosing("MSFT"))
 
 '''
 This should graph the closing prices of the 5 selected stocks.
 '''
-plt.plot(stocks)
+plt.plot(msftClosing)
+plt.ylabel("Closing Price")
+plt.xlabel("Days")
 '''
 This is going to print out the stocks that were just plotted above.
 '''
