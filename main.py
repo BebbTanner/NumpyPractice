@@ -11,8 +11,23 @@ feature where the user selects those 5 stocks.
 '''
 def getClosing(ticker):
     stock = yf.Ticker(ticker)
+    '''
+    Line 17 is declaring a varaible called hist. This is going to grab 
+    the history of the selected stock tickers over the last 10 days.
+    '''
     hist = stock.history(period="10d")
+
+    '''
+    Empty list that will be used later in the program.
+    '''
     closingList = []
+
+
+    '''
+    This for loop is going to go through the history of the selected stocks
+    and find the closing price for each of them. Then it will add those prices 
+    to the closinglist and round the price by 2 decimals.
+    '''
     for price in hist['Close']:
         closingList.append(round(price, 2))
 
