@@ -13,7 +13,7 @@ def getClosing(ticker):
     stock = yf.Ticker(ticker)
     '''
     Line 17 is declaring a varaible called hist. This is going to grab 
-    the history of the selected stock tickers over the last 10 days.
+    the historical market data over the last 10 days.
     '''
     hist = stock.history(period="10d")
 
@@ -40,3 +40,13 @@ Stocks list that has the 5 stocks selected
 stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
 
 stockArray = np.array(stocks)
+
+'''
+This should graph the closing prices of the 5 selected stocks.
+'''
+plt.plot(stocks)
+'''
+This is going to print out the stocks that were just plotted above.
+'''
+plt.show()
+
