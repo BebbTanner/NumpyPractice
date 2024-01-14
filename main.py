@@ -10,15 +10,8 @@ It will then convert that into a line graph and save them as PNG's in the Charts
 import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
-import pprint
-import copy
+from pathlib import Path
 
-'''
-Function that is setup to grab stock information for 
-whatever stock is kicked into it. For now the stocks 
-selected are hard coded in, but I would like to add a
-feature where the user selects those 5 stocks.
-'''
 def getClosing(ticker):
     stock = yf.Ticker(ticker)
     hist = stock.history(period="10d")
@@ -29,6 +22,11 @@ def getClosing(ticker):
         closingList.append(round(price, 2))
 
     return closingList
+
+try:
+    Path("charts").mkdir()
+except FileExistsError:
+    pass
 
 
 stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
