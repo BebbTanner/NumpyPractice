@@ -5,8 +5,7 @@ This program will ask the user to enter 5 stock tickers. It will then
 get the closing price of those stocks for the last 10 days and save them as arrays.
 It will then convert that into a line graph and save them as PNG's in the Charts folder.
 '''
-
-
+import requests.exceptions
 import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,15 +22,9 @@ def getClosing(ticker):
 
     return closingList
 
-try:
-    Path("charts").mkdir()
-except FileExistsError:
-    pass
 
+def printGraphs(stock):
 
-stocks = ["MSFT", "AAPL", "GME", "SONY", "META"]
-
-for stock in stocks:
     stockClosing = np.array(getClosing(stock))
     days = list(range(1, len(stockClosing) + 1))
 
@@ -52,4 +45,36 @@ for stock in stocks:
     plt.savefig(saveFile)
 
     plt.show()
+
+
+def getStocks():
+
+    stocks = []
+
+    print("Please enter five stocks to graph: ")
+
+    for i in range(1, 6):
+        while True:
+            print("Enter the stock ticker number: " + str(1))
+            ticker = input("> ")
+
+            try:
+                stock = yf.Ticker(ticker)
+                stock.info
+                stock.append(ticker)
+                break
+            except:
+                print("That is not a valid stock. Please enter another.")
+
+    return stocks
+
+#Start of program
+try:
+    Path("charts").mkdir()
+except FileExistsError:
+    pass
+
+for stock in getStocks():
+    getClosing(stock)
+    printGraphs(stock)
 
